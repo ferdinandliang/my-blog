@@ -1,0 +1,79 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+
+const posts = await Astro.glob("../content/blog/*.md");
+posts.sort((a, b) => new Date(b.frontmatter.date) - new Date(a.frontmatter.date));
+---
+
+<BaseLayout title="我的博客" description="个人博客 - 思考与分享">
+  <section class="hero">
+    <h1>思考与分享</h1>
+    <p class="tagline">关于生活、技术与创作的零散记录</p>
+  </section>
+  <div class="post-list">
+    {posts.map((post) => (
+      <article class="post-item">
+        <time datetime={new Date(post.frontmatter.date).toISOString()}>
+          {new Date(post.frontmatter.date).toLocaleDateString("zh-CN", {
+            year: "numeric",
+            month: "long",
+            day: "numeric",
+          })}
+        </time>
+        <h2>
+          <a href={post.url}>{post.frontmatter.title}</a>
+        </h2>
+        <p>{post.frontmatter.description}</p>
+      </article>
+    ))}
+  </div>
+</BaseLayout>
+
+<style>
+  .hero {
+    padding: var(--spacing-xl) 0 var(--spacing-lg);
+  }
+  .hero h1 {
+    font-size: 3rem;
+    font-weight: 700;
+    letter-spacing: -0.03em;
+    margin-bottom: var(--spacing-xs);
+  }
+  .tagline {
+    font-size: 1.15rem;
+    color: var(--color-text-tertiary);
+    margin-bottom: 0;
+  }
+  .post-list {
+    margin-top: var(--spacing-lg);
+  }
+  .post-item {
+    padding: var(--spacing-md) 0;
+    border-bottom: 1px solid var(--color-border);
+  }
+  .post-item:first-child {
+    border-top: 1px solid var(--color-border);
+  }
+  .post-item time {
+    font-size: 0.85rem;
+    color: var(--color-text-tertiary);
+    display: block;
+    margin-bottom: 0.25rem;
+  }
+  .post-item h2 {
+    font-size: 1.35rem;
+    margin-bottom: 0.3rem;
+  }
+  .post-item h2 a {
+    color: var(--color-text);
+    text-decoration: none;
+  }
+  .post-item h2 a:hover {
+    color: var(--color-accent);
+  }
+  .post-item p {
+    font-size: 0.95rem;
+    color: var(--color-text-secondary);
+    margin-bottom: 0;
+  }
+</style>
