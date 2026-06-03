@@ -14,7 +14,7 @@ const { post } = Astro.props;
 const { Content, frontmatter } = post;
 ---
 
-<BaseLayout title={`${frontmatter.title} - 鎴戠殑鍗氬`} description={frontmatter.description}>
+<BaseLayout title={`${frontmatter.title} - 我的博客`} description={frontmatter.description}>
   <article>
     <header class="post-header">
       <time datetime={new Date(frontmatter.date).toISOString()}>
@@ -30,7 +30,7 @@ const { Content, frontmatter } = post;
       <Content />
     </div>
     <div class="post-nav">
-      <a href="/">&larr; 杩斿洖鏂囩珷鍒楄〃</a>
+      <a href="/">&larr; 返回文章列表</a>
     </div>
   </article>
 </BaseLayout>
