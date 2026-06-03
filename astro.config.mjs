@@ -1,16 +1,10 @@
-import { defineConfig } from "astro/config";
-import path from "node:path";
-
-const emptyModule = path.resolve("./src/empty-stub.js");
+﻿import { defineConfig } from "astro/config";
 
 export default defineConfig({
-  site: "https://your-domain.vercel.app",
+  site: "https://my-blog.vercel.app",
   vite: {
-    resolve: {
-      alias: {
-        "aria-query": emptyModule,
-        "axobject-query": emptyModule,
-      },
+    optimizeDeps: {
+      exclude: ["aria-query", "axobject-query"],
     },
   },
 });
