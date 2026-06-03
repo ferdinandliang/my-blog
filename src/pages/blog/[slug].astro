@@ -14,7 +14,7 @@ const { post } = Astro.props;
 const { Content, frontmatter } = post;
 ---
 
-<BaseLayout title={`${frontmatter.title} - 我的博客`} description={frontmatter.description}>
+<BaseLayout title={`${frontmatter.title} - 费尔南多的世界`} description={frontmatter.description}>
   <article>
     <header class="post-header">
       <time datetime={new Date(frontmatter.date).toISOString()}>

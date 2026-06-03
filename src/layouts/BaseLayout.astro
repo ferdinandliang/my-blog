@@ -8,7 +8,7 @@ interface Props {
   description?: string;
 }
 
-const { title, description = "个人博客 - 思考与分享" } = Astro.props;
+const { title, description = "费尔南多的世界 - 思考与分享" } = Astro.props;
 ---
 
 <!doctype html>
@@ -20,7 +20,7 @@ const { title, description = "个人博客 - 思考与分享" } = Astro.props;
     <title>{title}</title>
   </head>
   <body>
-    <Header title="我的博客" />
+    <Header title="费尔南多的世界" />
     <main class="container">
       <slot />
     </main>

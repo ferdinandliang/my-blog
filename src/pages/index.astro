@@ -5,7 +5,7 @@ const posts = await Astro.glob("../content/blog/*.md");
 posts.sort((a, b) => new Date(b.frontmatter.date) - new Date(a.frontmatter.date));
 ---
 
-<BaseLayout title="我的博客" description="个人博客 - 思考与分享">
+<BaseLayout title="费尔南多的世界" description="费尔南多的世界 - 思考与分享">
   <section class="hero">
     <h1>思考与分享</h1>
     <p class="tagline">关于生活、技术与创作的零散记录</p>
