@@ -1,0 +1,223 @@
+---
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import { getCollection, render } from "astro:content";
+
+export async function getStaticPaths() {
+  const items = await getCollection("commons");
+  return items.map((item) => {
+    const slug = item.slug || item.id.replace(/\.md$/, "");
+    return {
+      params: { slug },
+      props: { item },
+    };
+  });
+}
+
+const { item } = Astro.props;
+const { Content } = await render(item);
+const { data } = item;
+---
+
+<BaseLayout
+  title={`${data.title} - 阅藏 · 费德南多的世界`}
+  description={data.description}
+>
+  <article class="commons-detail">
+    <div class="breadcrumb">
+      <a href="/">首页</a> <span>/</span> <a href="/commons">阅藏</a> <span>/</span> <span>{data.category}</span>
+    </div>
+
+    <header class="detail-header">
+      <div class="badge-row">
+        <span class="badge badge-accent">{data.category}</span>
+        <span class="badge badge-outline">{data.sourceType}</span>
+      </div>
+
+      <h1>{data.title}</h1>
+      <p class="subtitle">{data.description}</p>
+
+      <div class="meta-box">
+        <div class="meta-item">
+          <span class="meta-label">来源节目</span>
+          <span class="meta-val">{data.sourceName}</span>
+        </div>
+        {data.author && (
+          <div class="meta-item">
+            <span class="meta-label">主讲 / 对话</span>
+            <span class="meta-val">{data.author}</span>
+          </div>
+        )}
+        {data.duration && (
+          <div class="meta-item">
+            <span class="meta-label">收听时长</span>
+            <span class="meta-val">{data.duration}</span>
+          </div>
+        )}
+        <div class="meta-item">
+          <span class="meta-label">沉淀日期</span>
+          <span class="meta-val">
+            {new Date(data.date).toLocaleDateString("zh-CN", {
+              year: "numeric",
+              month: "long",
+              day: "numeric",
+            })}
+          </span>
+        </div>
+      </div>
+
+      {data.audioUrl && (
+        <div class="audio-panel">
+          <div class="audio-info">
+            <span class="audio-icon">🎧</span>
+            <span>原始音频广播直链</span>
+          </div>
+          <audio controls preload="none" src={data.audioUrl} class="audio-player"></audio>
+        </div>
+      )}
+    </header>
+
+    <div class="detail-body">
+      <Content />
+    </div>
+
+    <footer class="detail-footer">
+      <div class="tags-row">
+        <span class="tags-label">主题索引：</span>
+        {data.tags.map((tag: string) => (
+          <span class="badge badge-outline">#{tag}</span>
+        ))}
+      </div>
+      <div class="nav-back">
+        <a href="/commons">&larr; 返回阅藏知识库</a>
+      </div>
+    </footer>
+  </article>
+</BaseLayout>
+
+<style>
+  .commons-detail {
+    padding-top: var(--spacing-sm);
+  }
+  .breadcrumb {
+    font-size: 0.85rem;
+    color: var(--color-text-tertiary);
+    margin-bottom: var(--spacing-md);
+  }
+  .breadcrumb a {
+    color: var(--color-text-tertiary);
+  }
+  .breadcrumb a:hover {
+    color: var(--color-accent);
+  }
+  .breadcrumb span {
+    margin: 0 0.35rem;
+  }
+  .detail-header {
+    border-bottom: 1px solid var(--color-border);
+    padding-bottom: var(--spacing-lg);
+    margin-bottom: var(--spacing-lg);
+  }
+  .badge-row {
+    display: flex;
+    gap: 0.5rem;
+    margin-bottom: var(--spacing-xs);
+  }
+  .detail-header h1 {
+    font-size: 2.2rem;
+    font-weight: 600;
+    line-height: 1.3;
+    margin-bottom: 0.6rem;
+  }
+  .subtitle {
+    font-size: 1.05rem;
+    color: var(--color-text-secondary);
+    line-height: 1.65;
+    margin-bottom: var(--spacing-md);
+  }
+  .meta-box {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+    gap: 0.85rem;
+    padding: var(--spacing-sm) var(--spacing-md);
+    background: var(--color-surface);
+    border: 1px solid var(--color-border-subtle);
+    border-radius: 4px;
+    margin-bottom: var(--spacing-md);
+  }
+  .meta-item {
+    display: flex;
+    flex-direction: column;
+    gap: 0.15rem;
+  }
+  .meta-label {
+    font-size: 0.75rem;
+    color: var(--color-text-tertiary);
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+  }
+  .meta-val {
+    font-size: 0.88rem;
+    color: var(--color-text);
+    font-weight: 500;
+  }
+  .audio-panel {
+    display: flex;
+    flex-direction: column;
+    gap: 0.4rem;
+    padding: 0.75rem var(--spacing-md);
+    background: var(--color-surface);
+    border: 1px solid var(--color-border);
+    border-radius: 4px;
+  }
+  .audio-info {
+    font-size: 0.82rem;
+    color: var(--color-text-secondary);
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+  }
+  .audio-player {
+    width: 100%;
+    height: 36px;
+  }
+  .detail-body {
+    font-size: 1.02rem;
+    line-height: 1.85;
+  }
+  .detail-body :global(p) {
+    color: var(--color-text);
+    margin-bottom: var(--spacing-md);
+  }
+  .detail-body :global(h2) {
+    font-size: 1.45rem;
+    border-bottom: 1px solid var(--color-border-subtle);
+    padding-bottom: 0.35rem;
+    margin-top: var(--spacing-xl);
+    margin-bottom: var(--spacing-md);
+  }
+  .detail-body :global(h3) {
+    font-size: 1.2rem;
+    margin-top: var(--spacing-lg);
+    margin-bottom: var(--spacing-xs);
+  }
+  .detail-footer {
+    margin-top: var(--spacing-xl);
+    padding-top: var(--spacing-lg);
+    border-top: 1px solid var(--color-border);
+  }
+  .tags-row {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    flex-wrap: wrap;
+    margin-bottom: var(--spacing-md);
+  }
+  .tags-label {
+    font-size: 0.82rem;
+    color: var(--color-text-tertiary);
+  }
+  .nav-back a {
+    font-size: 0.92rem;
+    color: var(--color-text-secondary);
+  }
+</style>

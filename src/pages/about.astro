@@ -1,26 +1,35 @@
-﻿---
+---
 import BaseLayout from "../layouts/BaseLayout.astro";
 ---
 
-<BaseLayout title="关于 - 费尔南多的世界">
+<BaseLayout title="关于 - 费德南多的世界" description="关于费德南多的世界：个人长篇原创见地与文化阅藏">
   <section class="about-hero">
     <h1>关于</h1>
-    <p>你好，我是一名写作者。</p>
+    <p>这里是费德南多的个人写作空间。</p>
   </section>
 
   <div class="about-body">
     <p>
-      我在互联网上写作已有几年时间，之前在 WordPress 和微信公众号上发布文章。
-      2026 年，我决定建立自己的独立博客——一个完全由自己掌控的写作空间。
+      在专业工作之余，这里是我记录个人长篇思考、文化溯源与通识探索的自留地。
     </p>
+
+    <h2>板块构成</h2>
     <p>
-      这个网站本身也是我的作品之一。我希望它足够简洁、专注于内容本身，
-      就像苹果的设计哲学一样：去掉一切不必要的，留下的就是本质。
+      网站主要由两个互相支撑的板块构成：
     </p>
+    <ul>
+      <li><strong>见地（Essays）</strong>：不设限的长篇原创思考、历史与民系考据、行走田野间的独立论述。字斟句酌，沉淀个人对时代与文明的真实理解。</li>
+      <li><strong>阅藏（Commons）</strong>：文化与通识层面的知识储备库。涵盖优质播客精读、艺术营造与商业文化史解构，借助结构化整理，将高质量的思想输入转化为可复用的知识资产。</li>
+    </ul>
+
+    <h2>极简哲学</h2>
     <p>
-      如果你对我的文章感兴趣，欢迎不定期来访。这里没有评论区，没有社交分享按钮，
-      只有文字，和你。
+      网站坚持极致纯粹的排版与阅读体验。去掉多余的修饰与浮躁干扰，回归纸质书般的安静感——只有文字、脉络与读者。
     </p>
+
+    <div class="signature">
+      <p>— 费德南多</p>
+    </div>
   </div>
 </BaseLayout>
 
@@ -31,17 +40,42 @@ import BaseLayout from "../layouts/BaseLayout.astro";
     margin-bottom: var(--spacing-lg);
   }
   .about-hero h1 {
-    font-size: 3rem;
-    font-weight: 700;
-    letter-spacing: -0.03em;
+    font-family: var(--font-serif);
+    font-size: 2.5rem;
+    font-weight: 600;
+    letter-spacing: 0.04em;
     margin-bottom: var(--spacing-xs);
   }
   .about-hero p {
     font-size: 1.15rem;
-    color: var(--color-text-tertiary);
+    color: var(--color-text-secondary);
     margin-bottom: 0;
   }
   .about-body p {
     margin-bottom: var(--spacing-md);
+    line-height: 1.85;
+  }
+  .about-body h2 {
+    font-size: 1.35rem;
+    margin-top: var(--spacing-lg);
+    margin-bottom: var(--spacing-sm);
+  }
+  .about-body ul {
+    margin-bottom: var(--spacing-md);
+  }
+  .about-body li {
+    margin-bottom: 0.5rem;
+    color: var(--color-text-secondary);
+  }
+  .signature {
+    margin-top: var(--spacing-xl);
+    padding-top: var(--spacing-md);
+    border-top: 1px solid var(--color-border-subtle);
+  }
+  .signature p {
+    font-family: var(--font-serif);
+    font-size: 1.05rem;
+    color: var(--color-text);
+    letter-spacing: 0.05em;
   }
 </style>

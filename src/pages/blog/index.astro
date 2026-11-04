@@ -1,0 +1,105 @@
+---
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import { getCollection } from "astro:content";
+
+const posts = await getCollection("blog");
+posts.sort((a, b) => new Date(b.data.date).getTime() - new Date(a.data.date).getTime());
+---
+
+<BaseLayout title="见地 · Essays - 费德南多的世界" description="严肃的个人长篇沉思、文化观察与原创论述">
+  <div class="page-header">
+    <div class="breadcrumb">
+      <a href="/">首页</a> <span>/</span> <span>见地</span>
+    </div>
+    <h1>见地 · Essays</h1>
+    <p class="tagline">长篇沉思、田野观察与原创文化论述</p>
+  </div>
+
+  <div class="post-list">
+    {posts.map((post) => {
+      const slug = post.slug || post.id.replace(/\.md$/, "");
+      return (
+        <article class="post-item">
+          <div class="post-meta">
+            <time datetime={new Date(post.data.date).toISOString()}>
+              {new Date(post.data.date).toLocaleDateString("zh-CN", {
+                year: "numeric",
+                month: "long",
+                day: "numeric",
+              })}
+            </time>
+            <span class="badge badge-outline">原创长文</span>
+          </div>
+          <h2>
+            <a href={`/blog/${slug}`}>{post.data.title}</a>
+          </h2>
+          <p>{post.data.description}</p>
+        </article>
+      );
+    })}
+  </div>
+</BaseLayout>
+
+<style>
+  .page-header {
+    padding: var(--spacing-lg) 0 var(--spacing-md);
+    border-bottom: 1px solid var(--color-border);
+    margin-bottom: var(--spacing-lg);
+  }
+  .breadcrumb {
+    font-size: 0.85rem;
+    color: var(--color-text-tertiary);
+    margin-bottom: var(--spacing-sm);
+  }
+  .breadcrumb a {
+    color: var(--color-text-tertiary);
+  }
+  .breadcrumb a:hover {
+    color: var(--color-accent);
+  }
+  .breadcrumb span {
+    margin: 0 0.35rem;
+  }
+  .page-header h1 {
+    font-size: 2.2rem;
+    font-weight: 600;
+    margin-bottom: var(--spacing-xs);
+  }
+  .tagline {
+    font-size: 1.05rem;
+    color: var(--color-text-secondary);
+    margin-bottom: 0;
+  }
+  .post-list {
+    margin-top: var(--spacing-md);
+  }
+  .post-item {
+    padding: var(--spacing-md) 0;
+    border-bottom: 1px solid var(--color-border-subtle);
+  }
+  .post-meta {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    margin-bottom: 0.35rem;
+  }
+  .post-meta time {
+    font-size: 0.82rem;
+    color: var(--color-text-tertiary);
+  }
+  .post-item h2 {
+    font-size: 1.4rem;
+    margin: 0 0 0.35rem 0;
+  }
+  .post-item h2 a {
+    color: var(--color-text);
+  }
+  .post-item h2 a:hover {
+    color: var(--color-accent);
+  }
+  .post-item p {
+    font-size: 0.95rem;
+    color: var(--color-text-secondary);
+    margin-bottom: 0;
+  }
+</style>

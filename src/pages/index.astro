@@ -1,83 +1,61 @@
 ---
 import BaseLayout from "../layouts/BaseLayout.astro";
-
-const posts = await Astro.glob("../content/blog/*.md");
-posts.sort((a, b) => new Date(b.frontmatter.date) - new Date(a.frontmatter.date));
 ---
 
-<BaseLayout title="费尔南多的世界" description="费尔南多的世界 - 思考与分享">
-  <section class="hero">
-    <h1>思考与分享</h1>
-    <p class="tagline">关于生活、技术与创作的零散记录</p>
-  </section>
-  <div class="post-list">
-    {posts.map((post) => {
-      const slug = post.frontmatter.slug ||
-        post.file.replace(/\\/g, "/").split("/").pop()?.replace(/\.md$/, "") || "";
-      return (
-      <article class="post-item">
-        <time datetime={new Date(post.frontmatter.date).toISOString()}>
-          {new Date(post.frontmatter.date).toLocaleDateString("zh-CN", {
-            year: "numeric",
-            month: "long",
-            day: "numeric",
-          })}
-        </time>
-        <h2>
-          <a href={`/blog/${slug}`}>{post.frontmatter.title}</a>
-        </h2>
-        <p>{post.frontmatter.description}</p>
-      </article>
-      );
-    })}
+<BaseLayout
+  title="费德南多的世界"
+  description="费德南多的世界 - 思考与分享"
+>
+  <div class="minimal-home">
+    <div class="statement">
+      <h1 class="main-title">思考与分享</h1>
+      <p class="tagline">关于生活、技术与创作的零散记录</p>
+    </div>
   </div>
 </BaseLayout>
 
 <style>
-  .hero {
-    padding: var(--spacing-xl) 0 var(--spacing-lg);
+  .minimal-home {
+    min-height: calc(70vh - 120px);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding-bottom: 12vh;
   }
-  .hero h1 {
-    font-size: 3rem;
-    font-weight: 700;
-    letter-spacing: -0.03em;
-    margin-bottom: var(--spacing-xs);
+
+  .statement {
+    max-width: 620px;
   }
+
+  .main-title {
+    font-family: var(--font-serif);
+    font-size: 2.85rem;
+    font-weight: 500;
+    letter-spacing: 0.05em;
+    line-height: 1.25;
+    color: var(--color-text);
+    margin-bottom: var(--spacing-sm);
+  }
+
   .tagline {
     font-size: 1.15rem;
-    color: var(--color-text-tertiary);
-    margin-bottom: 0;
-  }
-  .post-list {
-    margin-top: var(--spacing-lg);
-  }
-  .post-item {
-    padding: var(--spacing-md) 0;
-    border-bottom: 1px solid var(--color-border);
-  }
-  .post-item:first-child {
-    border-top: 1px solid var(--color-border);
-  }
-  .post-item time {
-    font-size: 0.85rem;
-    color: var(--color-text-tertiary);
-    display: block;
-    margin-bottom: 0.25rem;
-  }
-  .post-item h2 {
-    font-size: 1.35rem;
-    margin-bottom: 0.3rem;
-  }
-  .post-item h2 a {
-    color: var(--color-text);
-    text-decoration: none;
-  }
-  .post-item h2 a:hover {
-    color: var(--color-accent);
-  }
-  .post-item p {
-    font-size: 0.95rem;
     color: var(--color-text-secondary);
+    line-height: 1.7;
     margin-bottom: 0;
+    letter-spacing: 0.02em;
+    font-weight: 400;
+  }
+
+  @media (max-width: 640px) {
+    .minimal-home {
+      min-height: 50vh;
+      padding-bottom: 6vh;
+    }
+    .main-title {
+      font-size: 2.2rem;
+    }
+    .tagline {
+      font-size: 1.05rem;
+    }
   }
 </style>
